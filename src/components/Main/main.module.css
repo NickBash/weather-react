@@ -1,0 +1,61 @@
+.fon {
+    height: 100vh;
+    width: 100%;
+    background: rgba(0, 0, 0, .5);
+}
+
+.containerBlock {
+    padding: 30px 0;
+    text-align: center;
+    color: #ffffff;
+}
+
+input {
+    margin: 10px 0 30px;
+    padding: 10px;
+    border-radius: 3px;
+    background: #ffffff;
+    border: 1px solid #ffffff;
+    outline: none;
+    font-size: 14px;
+    width: 100%;
+}
+
+.card {
+    width: 100%;
+    text-align: center;
+}
+
+.location {
+    width: 100%;
+    margin: 0 0 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 20px;
+    text-shadow: 2px 2px 2px grey;
+}
+
+.location p {
+    margin: 5px 0 20px;
+}
+
+.tempBox {
+    margin: 0 auto;
+    width: 260px;
+    background: rgba(255, 255, 255, .3);
+    border-radius: 8px;
+    padding: 10px 0;
+    box-shadow: 0px 0px 28px 2px grey;
+}
+
+.tempBox .temp {
+    padding: 5px;
+    font-size: 70px;
+    margin: 0;
+    text-shadow: 2px 2px 3px grey;
+}
+
+.tempBox .weather {
+    margin: 0;
+    text-shadow: 2px 2px 2px grey;
+}
