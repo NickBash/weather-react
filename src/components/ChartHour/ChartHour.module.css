@@ -1,0 +1,9 @@
+.ChartHour {
+    padding: 20px;
+    color: black;
+    background: white;
+    width: 90vw;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 1px grey;
+}
