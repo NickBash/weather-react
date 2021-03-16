@@ -1,17 +1,17 @@
 import React, {useState, useEffect} from 'react'
-import {Line} from 'react-chartjs-2'
+import {Bar} from 'react-chartjs-2'
 import classes from './ChartHour.module.css'
 
-function ChartHour(props) {
+function ChartHour({time, precipitation}) {
     const [chartData, setChartData] = useState({})
 
     const chart = () => {
         setChartData({
-            labels: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+            labels: time,
             datasets: [
                 {
                     label: 'Осадки',
-                    data: [22, 22, '22', 50, 2],
+                    data: precipitation,
                     backgroundColor: [
                         'rgba(9,65,239, .2)'
                     ],
@@ -19,29 +19,30 @@ function ChartHour(props) {
                     borderColor: 'rgba(9,65,239, 1)'
 
                 }
-            ]
+            ],
         })
     }
 
     useEffect(() => {
         chart()
+        // eslint-disable-next-line
     }, [])
+
     return (
         <div>
+            {console.log(precipitation)}
         <div className={classes.ChartHour}>
-            <Line data={chartData} options={{
+            <Bar data={chartData} options={{
                 responsive: true,
                 title: {text: 'Осадки в течение часа', display: true},
                 scales: {
                     yAxes: [
                         {
                             ticks: {
-                                autoSkip: true,
-                                maxTicksLimit: 10,
-                                beginAtZero: true
+                                beginAtZero: true,
                             },
                             gridLines: {
-                                display: false
+                                display: true
                             },
                             stacked: true
                         }
@@ -50,7 +51,7 @@ function ChartHour(props) {
                         {
                             gridLines: {
                                 display: false
-                            }
+                            },
                         }
                     ]
                 }

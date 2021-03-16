@@ -15,21 +15,20 @@ function Main() {
     const [weatherOne, setWeatherOne] = useState({})
     const [view, setView] = useState([true, false, false, false])
 
-    const search = event => {
-        if (event.key === "Enter") {
-            fetch(`${api.base}weather?q=${query}&units=metric&appid=${api.key}&lang=ru`)
-                .then(res => res.json())
-                .then(result => {
-                    setWeather(result)
-                    setQuery('')
-                    console.log(result)
-                    weatherOneHourHandler(result.coord)
-                })
-                .catch((err) => {
-                    console.log("error: " + err)
-                })
 
-        }
+    const search = event => {
+        event.preventDefault()
+        fetch(`${api.base}weather?q=${query}&units=metric&appid=${api.key}&lang=ru`)
+            .then(res => res.json())
+            .then(result => {
+                setWeather(result)
+                setQuery('')
+                weatherOneHourHandler(result.coord)
+            })
+            .catch((err) => {
+                console.log("error: " + err)
+            })
+
     }
 
     const dateCreater = (d) => {
@@ -87,7 +86,7 @@ function Main() {
                 .then(res => res.json())
                 .then(result => {
                     setWeatherOne(result)
-                    console.log(result)
+                    //console.log(result)
                 })
                 .catch((err) => {
                     console.log("error: " + err)
@@ -97,35 +96,46 @@ function Main() {
 
     const weatherOneHour = () => {
         if (weatherOne.minutely) {
+            const time = []
+            const precipitation = []
+            for (let i = 0; i <= weatherOne.minutely.length; i++) {
+                if (i % 5 === 0) {
+                    precipitation.push(weatherOne.minutely[i].precipitation)
+                    time.push(moment((weatherOne.minutely[i].dt) * 1000).local().format('HH:mm'))
+                }
+            }
             return (
-                weatherOne.minutely.map((i, k) =>
-                    <div key={k}>
-                        {/*{moment(i.dt * 1000).local().format('HH:mm')}, {i.precipitation}*/}
-                    </div>)
-            )
+                <div>
+                    <ChartHour time={time} precipitation={precipitation}/>
+                </div>)
         }
     }
 
     return (
-        <div className={classes.fon}>
-            {console.log(weatherOne)}
+        <div className={classes.background}>
             <Container className={classes.containerBlock}>
+                <h2 className={classes.title}>Погода</h2>
                 <div>
                     <Row justify="center">
                         <Col xl={4}>
-                            <input
-                                type="text"
-                                placeholder="Введите город..."
-                                onChange={e => setQuery(e.target.value)}
-                                value={query}
-                                onKeyPress={search}
-                            />
+                            <div className={classes.block_search}>
+                                <form>
+                                    <input
+                                        type="text"
+                                        placeholder="Введите город..."
+                                        onChange={e => setQuery(e.target.value)}
+                                        value={query}
+                                    />
+                                    <button onClick={search} className={classes.search_button}>Найти</button>
+                                </form>
+                            </div>
                         </Col>
                     </Row>
                     <Row justify="center">
                         <div className={classes.group_radio}>
                             <div className={classes.form_radio_btn}>
-                                <input onClick={e => checkRadio(e)} id="radio-1" type="radio" name="radio" value="1" defaultChecked/>
+                                <input onClick={e => checkRadio(e)} id="radio-1" type="radio" name="radio" value="1"
+                                       defaultChecked/>
                                 <label htmlFor="radio-1">Погода сейчас</label>
                             </div>
 
@@ -147,7 +157,7 @@ function Main() {
                     </Row>
                     <Row justify="center">
                         {view[0] === true ? weatherNow() : null}
-                        {view[1] === true ? <div><ChartHour /></div> : null}
+                        {view[1] === true ? <div>{weatherOneHour()}</div> : null}
                     </Row>
                 </div>
             </Container>
