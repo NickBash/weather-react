@@ -17,7 +17,6 @@ function ChartHour({time, precipitation}) {
                     ],
                     borderWidth: 2,
                     borderColor: 'rgba(9,65,239, 1)'
-
                 }
             ],
         })
